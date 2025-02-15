@@ -41,10 +41,23 @@
             padding: 10px;
         }
 
-        .left-s {
-            display: flex;
-            align-items: center;
-        }
+		.left-s {
+    display: flex;
+    align-items: center; /* لضبط المحاذاة الرأسية */
+    gap: 10px; /* لإضافة مسافة بين الصورة والاسم */
+}
+
+.site-name {
+    font-size: 24px; /* تحديد حجم الخط */
+    font-weight: bold; /* جعل الخط عريض */
+    color: #333; /* تحديد لون النص */
+}
+.M-name {
+    font-size: 24px; /* تحديد حجم الخط */
+    font-weight: bold; /* جعل الخط عريض */
+    color: #333; /* تحديد لون النص */
+}
+
 
         .left-s img {
             margin-right: 15px;
@@ -71,25 +84,29 @@
             color: #7b3a62;
         }
 
-        .motivational-text {
-            width: 100%;
-            background-color: #cf0e0e;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
-            text-align: center;
-            margin-bottom: 15px;
-        }
+		.motivational-text {
+    width: 100%;
+    background-color: #cf0e0e;
+    color: white;
+    font-size: 40px; /* تكبير حجم الخط */
+    font-weight: bold;
+    padding: 20px; /* زيادة التباعد الداخلي */
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    margin-bottom: 15px;
+    height: 80px; /* زيادة ارتفاع الشريط */
+}
 
-        .motivational-text span {
-            position: absolute;
-            animation: scrolling 15s linear infinite;
-            padding-left: 100%;
-        }
+.motivational-text span {
+    position: absolute;
+    animation: scrolling 15s linear infinite;
+    padding-left: 100%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+
 
         .motivational-text span:nth-child(1) {
             animation-delay: 0s;
@@ -199,6 +216,13 @@
         button:hover {
             background: #7b3a62;
         }
+		.video-thumbnail {
+    width: 60%; /* يمكنك تعديل النسبة هنا لتصغير أو تكبير الصورة */
+    max-width: 200px; /* الحد الأقصى لعرض الصورة */
+    height: auto; /* الحفاظ على النسبة الأصلية للصورة */
+    border-radius: 8px; /* يمكنك إضافة حواف دائرية إذا رغبت */
+}
+
 
         @media (max-width: 768px) {
             header {
@@ -229,6 +253,8 @@
         <div class="header-content">
             <div class="left-s">
                 <img src="icons8-happy-study-48.png" alt="CIS Icon"/>
+				<span class="site-name">Maali Mohammed Al-salamat</span> <!-- اسمك هنا -->
+
                 <span>CIS JU</span>
             </div>
             <div class="icons-container">
@@ -239,6 +265,8 @@
                 <span class="material-icons icon">cloud_queue</span>
                 <span class="material-icons icon">wifi</span>
                 <span class="material-icons icon">bluetooth</span>
+				<span class="M-name">CIS JU</span> <!-- اسمك هنا -->
+
             </div>
         </div>
         <div class="motivational-text">
@@ -262,19 +290,19 @@
             <img id="home-image" src="w.png" alt="CIS Image">
             <p class="quote">“Education is the most powerful weapon which you can use to change the world.”</p>
             <button onclick="showContent('about')">About CIS at JU</button>
-            <button onclick="showContent('aboutCreator')">About the Creator</button>
+            <button onclick="showContent('aboutCreator')">About  Site engineer</button>
         </div>
     </section>
 
     <section id="about-content" class="content-container">
         <h2>About</h2>
-        <p class="quote">“Education is the most powerful weapon which you can use to change the world.”</p>
-        <p>The CIS program at the University of Jordan is designed to provide students with a strong foundation in computer science and information systems.</p>
+        <p class="quote">“Perhaps what you insist on is destined for you”</p>
+        <p>The Computer Information Systems (CIS) major is one of the most important majors in information and computer technology. This major combines various computer science majors and organizational and administrative fields, where the student acquires the knowledge and skills necessary to analyze, design, develop and operate information systems, and benefit from them in any public or private institutions.Currently, the department contains 24 faculty members, including 16 members who hold doctoral degrees, and 8 members who hold master’s degrees. Hundreds of students at various university levels graduate from the CIS Department.</p>
     </section>
 
     <section id="aboutCreator-content" class="content-container">
-        <h2>About the Creator</h2>
-        <p>Maali Mohammed Al-Adwan, a student at King Abdullah II School of Engineering, University of Jordan. Despite the challenges, Maali is today in the right place, pursuing the right career path.</p>
+        <h2>About Site engineer </h2>
+        <p>Maali Mohammad Al-Salamat, student at King Abdullah II College of Information Technology, University of Jordan. Despite the challenges, she believes that what you insist on is destined for you and that nothing is impossible, and she hopes that you will benefit from the site.</p>
     </section>
 
     <section id="videos-content" class="content-container">
@@ -282,7 +310,7 @@
         <div class="video-section">
             <!-- Video 1 -->
             <div class="video-container" data-title="Math 101">
-                <img class="video-thumbnail" src="video1-thumbnail.jpg" alt="Video 1" onclick="playVideo('video1')">
+                <img class="video-thumbnail" src="MMM.jpg" alt="Video 1" onclick="playVideo('video1')">
                 <span id="star1" class="star">⭐</span>
                 <div class="video-description">
                     <p class="video-name">Math 101</p>
@@ -291,13 +319,72 @@
             </div>
             <!-- Video 2 -->
             <div class="video-container" data-title="Physics 102">
-                <img class="video-thumbnail" src="video2-thumbnail.jpg" alt="Video 2" onclick="playVideo('video2')">
+                <img class="video-thumbnail" src="MMM.jpg" alt="Video 2" onclick="playVideo('video2')">
                 <span id="star2" class="star">⭐</span>
                 <div class="video-description">
                     <p class="video-name">Physics 102</p>
                     <p>This is a physics course video.</p>
                 </div>
             </div>
+			<div class="video-container" data-title="Physics 102">
+                <img class="video-thumbnail" src="MMM.jpg" alt="Video 3" onclick="playVideo('video2')">
+                <span id="star3" class="star">⭐</span>
+                <div class="video-description">
+                    <p class="video-name">Physics 102</p>
+                    <p>This is a physics course video.</p>
+                </div>
+            </div>
+			<div class="video-container" data-title="Physics 102">
+                <img class="video-thumbnail" src="MMM.jpg" alt="Video 4" onclick="playVideo('video2')">
+                <span id="star4" class="star">⭐</span>
+                <div class="video-description">
+                    <p class="video-name">Physics 102</p>
+                    <p>This is a physics course video.</p>
+                </div>
+            </div>
+			<!-- مودال الفيديو -->
+			<div id="videoModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal()">&times;</span>
+					<video id="videoPlayer" controls width="100%">
+						<source id="videoSource" src="" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<section id="videos-content" class="content-container">
+						<h2>Video Playlist</h2>
+						<div class="video-section">
+							<div class="video-container" data-title="Math 101">
+								<img class="video-thumbnail" src="MMM.jpg" alt="Video 1" onclick="openModal('video1')">
+								<div class="video-description">
+									<p class="video-name">Math 101</p>
+									<p>This is a basic math course video.</p>
+								</div>
+							</div>
+							<div class="video-container" data-title="Physics 102">
+								<img class="video-thumbnail" src="MMM.jpg" alt="Video 2" onclick="openModal('video2')">
+								<div class="video-description">
+									<p class="video-name">Physics 102</p>
+									<p>This is a physics course video.</p>
+								</div>
+							</div>
+							<div class="video-container" data-title="Physics 103">
+								<img class="video-thumbnail" src="MMM.jpg" alt="Video 3" onclick="openModal('video3')">
+								<div class="video-description">
+									<p class="video-name">Physics 103</p>
+									<p>This is a physics course video.</p>
+								</div>
+							</div>
+							<div class="video-container" data-title="Physics 104">
+								<img class="video-thumbnail" src="MMM.jpg" alt="Video 4" onclick="openModal('video4')">
+								<div class="video-description">
+									<p class="video-name">Physics 104</p>
+									<p>This is a physics course video.</p>
+								</div>
+							</div>
+						</div>
+				</div>
+</div>
+
         </div>
     </section>
 
@@ -336,6 +423,37 @@
         // Initialize video end handling
         handleVideoEnd('video1', 'star1');
         handleVideoEnd('video2', 'star2');
+		handleVideoEnd('video3', 'star3');
+		handleVideoEnd('video4', 'star4');
+		
+    function openModal(videoId) {
+        const modal = document.getElementById("videoModal");
+        const videoPlayer = document.getElementById("videoPlayer");
+        const videoSource = document.getElementById("videoSource");
+
+        // تحديث الرابط الخاص بكل فيديو بناءً على videoId
+        if (videoId === 'video1') {
+            videoSource.src = 'https://youtu.be/gYczYdsTxBs?si=u2DfmgpQEODnNg1U';  // رابط الفيديو الفعلي
+        } else if (videoId === 'video2') {
+            videoSource.src = 'uploads/videos/video2.mp4';  // رابط الفيديو الفعلي
+        } else if (videoId === 'video3') {
+            videoSource.src = 'uploads/videos/video3.mp4';  // رابط الفيديو الفعلي
+        } else if (videoId === 'video4') {
+            videoSource.src = 'uploads/videos/video4.mp4';  // رابط الفيديو الفعلي
+        }
+
+        videoPlayer.load();  // تحميل الفيديو
+        modal.style.display = "block";  // عرض المودال
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("videoModal");
+        const videoPlayer = document.getElementById("videoPlayer");
+        modal.style.display = "none";  // إغلاق المودال
+        videoPlayer.pause();  // إيقاف الفيديو
+    }
+
+
     </script>
 </body>
 </html>
