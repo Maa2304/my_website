@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+    <title>The Study</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ffffff, #a5abe2);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            color: white;
+            padding: 30px;
+            width: 100%;
+            border-bottom: 3px solid #f9f9f9;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px;
+        }
+
+        .left-s {
+            display: flex;
+            align-items: center;
+        }
+
+        .left-s img {
+            margin-right: 15px;
+        }
+
+        .left-s span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .icons-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .icon {
+            font-size: 36px;
+            color: #686D9C;
+            transition: color 0.3s;
+        }
+
+        .icon:hover {
+            color: #7b3a62;
+        }
+
+        .motivational-text {
+            width: 100%;
+            background-color: #cf0e0e;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .motivational-text span {
+            position: absolute;
+            animation: scrolling 15s linear infinite;
+            padding-left: 100%;
+        }
+
+        .motivational-text span:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .motivational-text span:nth-child(2) {
+            animation-delay: 5s;
+        }
+
+        @keyframes scrolling {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: 12px 25px;
+            color: white;
+            background: #934B8F;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .nav-link:hover {
+            background: #7b3a62;
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            margin: 20px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .content-container {
+            display: none;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            margin-top: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .home-container {
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .home-container img {
+            width: 80%;
+            max-width: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .quote {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            max-width: 80%;
+        }
+
+        button {
+            background: #934B8F;
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            font-size: 22px;
+            cursor: pointer;
+            margin: 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #7b3a62;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            .home-container {
+                padding: 40px;
+            }
+
+            .quote {
+                font-size: 28px;
+            }
+
+            button {
+                font-size: 18px;
+                padding: 16px 32px;
+            }
+        }
+    </style>
+</head>
+<body onload="showContent('home')">
+    <header>
+        <div class="header-content">
+            <div class="left-s">
+                <img src="icons8-happy-study-48.png" alt="CIS Icon"/>
+                <span>CIS JU</span>
+            </div>
+            <div class="icons-container">
+                <span class="material-icons icon">laptop_chromebook</span>
+                <span class="material-icons icon">code</span>
+                <span class="material-icons icon">storage</span>
+                <span class="material-icons icon">phone_android</span>
+                <span class="material-icons icon">cloud_queue</span>
+                <span class="material-icons icon">wifi</span>
+                <span class="material-icons icon">bluetooth</span>
+            </div>
+        </div>
+        <div class="motivational-text">
+            <span>Believe in yourself and all that you are.</span>
+            <span>The future belongs to those who believe in the beauty of their dreams.</span>
+        </div>
+        <div class="nav-links">
+            <a href="javascript:void(0)" class="nav-link" onclick="showContent('home')"><span class="material-icons">home</span> Home</a>
+            <a href="javascript:void(0)" class="nav-link" onclick="showContent('about')"><span class="material-icons">info</span> About</a>
+            <a href="javascript:void(0)" class="nav-link" onclick="showContent('videos')"><span class="material-icons">video_library</span> Videos</a>
+            <a href="uploads/documents/sample.pdf" class="nav-link" download><span class="material-icons">file_download</span> Download File</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="videoSearch" onkeyup="searchVideos()" placeholder="Search for videos...">
+        </div>
+    </header>
+
+    <!-- Content sections -->
+    <section class="content-container" id="home-content" style="display: block;">
+        <div class="home-container">
+            <img id="home-image" src="w.png" alt="CIS Image">
+            <p class="quote">“Education is the most powerful weapon which you can use to change the world.”</p>
+            <button onclick="showContent('about')">About CIS at JU</button>
+            <button onclick="showContent('aboutCreator')">About the Creator</button>
+        </div>
+    </section>
+
+    <section id="about-content" class="content-container">
+        <h2>About</h2>
+        <p class="quote">“Education is the most powerful weapon which you can use to change the world.”</p>
+        <p>The CIS program at the University of Jordan is designed to provide students with a strong foundation in computer science and information systems.</p>
+    </section>
+
+    <section id="aboutCreator-content" class="content-container">
+        <h2>About the Creator</h2>
+        <p>Maali Mohammed Al-Adwan, a student at King Abdullah II School of Engineering, University of Jordan. Despite the challenges, Maali is today in the right place, pursuing the right career path.</p>
+    </section>
+
+    <section id="videos-content" class="content-container">
+        <h2>Video Playlist</h2>
+        <div class="video-section">
+            <!-- Video 1 -->
+            <div class="video-container" data-title="Math 101">
+                <img class="video-thumbnail" src="video1-thumbnail.jpg" alt="Video 1" onclick="playVideo('video1')">
+                <span id="star1" class="star">⭐</span>
+                <div class="video-description">
+                    <p class="video-name">Math 101</p>
+                    <p>This is a basic math course video.</p>
+                </div>
+            </div>
+            <!-- Video 2 -->
+            <div class="video-container" data-title="Physics 102">
+                <img class="video-thumbnail" src="video2-thumbnail.jpg" alt="Video 2" onclick="playVideo('video2')">
+                <span id="star2" class="star">⭐</span>
+                <div class="video-description">
+                    <p class="video-name">Physics 102</p>
+                    <p>This is a physics course video.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Show selected content
+        function showContent(type) {
+            document.querySelectorAll('.content-container').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(type + '-content').style.display = 'block';
+        }
+
+        // Search function for videos
+        function searchVideos() {
+            const searchQuery = document.getElementById("videoSearch").value.toLowerCase();
+            const videos = document.querySelectorAll('.video-container');
+            videos.forEach(video => {
+                const title = video.getAttribute('data-title').toLowerCase();
+                if (title.includes(searchQuery)) {
+                    video.style.display = 'block';
+                } else {
+                    video.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to show star on video completion
+        function handleVideoEnd(videoId, starId) {
+            const video = document.getElementById(videoId);
+            const star = document.getElementById(starId);
+            video.onended = function() {
+                star.style.visibility = 'visible'; // Show star when video ends
+            };
+        }
+
+        // Initialize video end handling
+        handleVideoEnd('video1', 'star1');
+        handleVideoEnd('video2', 'star2');
+    </script>
+</body>
+</html>
