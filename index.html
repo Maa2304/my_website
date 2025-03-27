@@ -1,520 +1,389 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-    <title>The Study</title>
-    <style>
-        /* الإعدادات القديمة تبقى كما هي */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #ffffff, #a5abe2);
-            margin: 0;
-            padding: 0;
-            color: #333;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كن مُرمّم - البلاغات الإلكترونية</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* تخصيص أيقونة الملف الشخصي */
+    .profile-icon {
+      background-color: #0037a6;
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .profile-icon:hover {
+      background-color: #00bd4f;
+    }
+    /* تخصيص الخريطة */
+    .map-container {
+      width: 100%;
+      height: 300px;
+      background-color: #ddd;
+      border-radius: 10px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .btn {
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .text-primary { color: #0037a6; }
+    .bg-primary { background-color: #0037a6; }
+    .bg-secondary { background-color: #00bd4f; }
+    .text-light { color: #ecf0f1; }
+    /* تخصيص القائمة المنسدلة للغات */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 5px;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    /* تخصيص التنبيه الأحمر */
+    .alert {
+      background-color: #ffcccb;
+      color: red;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+  </style>
+  <script>
+    // تغيير بين الصفحات
+    function showPage(page) {
+      // إخفاء جميع الصفحات
+      const pages = document.querySelectorAll('.page');
+      pages.forEach((p) => {
+        p.classList.add('hidden');
+      });
 
-        header {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: white;
-            color: white;
-            padding: 30px;
-            width: 100%;
-            border-bottom: 3px solid #f9f9f9;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            padding: 10px;
-        }
-
-        .left-s {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .site-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .icons-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .icon {
-            font-size: 36px;
-            color: #686D9C;
-            transition: color 0.3s;
-        }
-
-        .icon:hover {
-            color: #7b3a62;
-        }
-
-        .motivational-text {
-            width: 100%;
-            background-color: #cf0e0e;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            padding: 20px;
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
-            text-align: center;
-            margin-bottom: 15px;
-            height: 80px;
-        }
-
-        .motivational-text span {
-            position: absolute;
-            animation: scrolling 15s linear infinite;
-            padding-left: 100%;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-        }
-
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            padding: 12px 25px;
-            color: white;
-            background: #934B8F;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-size: 18px;
-        }
-
-        .nav-link:hover {
-            background: #7b3a62;
-            transform: scale(1.05);
-        }
-
-        .search-container {
-            margin: 20px;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .search-container input {
-            padding: 10px;
-            font-size: 16px;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .content-container {
-            display: none;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            margin-top: 30px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .home-container {
-            padding: 60px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .home-container img {
-            width: 80%;
-            max-width: 1000px;
-            margin-bottom: 30px;
-        }
-
-        .quote {
-            font-size: 32px;
-            font-weight: bold;
-            color: #333;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-            max-width: 80%;
-        }
-
-        button {
-            background: #934B8F;
-            color: white;
-            border: none;
-            padding: 18px 36px;
-            font-size: 22px;
-            cursor: pointer;
-            margin: 20px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: #7b3a62;
-        }
-
-        .video-thumbnail {
-            width: 60%;
-            max-width: 200px;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .video-list {
-            display: none;
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .video-list .video-container {
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body onload="showContent('home')">
-    <header>
-        <div class="header-content">
-            <div class="left-s">
-                <img src="icons8-happy-study-48.png" alt="CIS Icon"/>
-				<span class="site-name">Maali Mohammed Al-salamat</span>
-                <span>CIS JU</span>
-            </div>
-            <div class="icons-container">
-                <span class="material-icons icon">laptop_chromebook</span>
-                <span class="material-icons icon">code</span>
-                <span class="material-icons icon">storage</span>
-                <span class="material-icons icon">phone_android</span>
-                <span class="material-icons icon">cloud_queue</span>
-                <span class="material-icons icon">wifi</span>
-                <span class="material-icons icon">bluetooth</span>
-                <span class="M-name">CIS JU</span>
-            </div>
-        </div>
-        <div class="motivational-text">
-            <span>Believe in yourself and all that you are.</span>
-            <span>The future belongs to those who believe in the beauty of their dreams.</span>
-        </div>
-        <div class="nav-links">
-            <a href="javascript:void(0)" class="nav-link" onclick="showContent('home')"><span class="material-icons">home</span> Home</a>
-            <a href="javascript:void(0)" class="nav-link" onclick="showContent('about')"><span class="material-icons">info</span> About</a>
-            <a href="javascript:void(0)" class="nav-link" onclick="showContent('videos')"><span class="material-icons">video_library</span> Videos</a>
-            <a href="javascript:void(0)" class="nav-link" onclick="toggleFiles()">
-                <span class="material-icons">insert_drive_file</span> Files
-            </a>
-            
-            <section id="files-content" class="content-container" style="display: none;">
-                <h2>Available Files</h2>
-                <ul>
-                    <li><a href="uploads/files/sample1.pdf" download>Download Sample File 1</a></li>
-                    <li><a href="uploads/files/sample2.docx" download>Download Sample File 2</a></li>
-                    <li><a href="uploads/files/sample3.pptx" download>Download Sample File 3</a></li>
-                    <li><a href="uploads/files/sample4.txt" download>Download Sample File 4</a></li>
-                </ul>
-            </section>
-            
-            <script>
-                function toggleFiles() {
-                    const filesSection = document.getElementById("files-content");
-                    filesSection.style.display = (filesSection.style.display === "block") ? "none" : "block";
-                }
-            </script>
-                    </div>
-        <div class="search-container">
-            <input type="text" id="videoSearch" onkeyup="searchVideos()" placeholder="Search for videos...">
-        </div>
-    </header>
-
-    <!-- Content sections -->
-    <section class="content-container" id="home-content" style="display: block;">
-        <div class="home-container">
-            <img id="home-image" src="w.png" alt="CIS Image">
-            <p class="quote">“Education is the most powerful weapon which you can use to change the world.”</p>
-            <button onclick="showContent('about')">About CIS at JU</button>
-            <button onclick="showContent('aboutCreator')">About  Site engineer</button>
-        </div>
-    </section>
-
-    <section id="about-content" class="content-container">
-        <h2>About</h2>
-        <p class="quote">“Perhaps what you insist on is destined for you”</p>
-        <p>The Computer Information Systems (CIS) major is one of the most important majors in information and computer technology...
-            Currently, the department contains 24 faculty members, including 16 members who hold doctoral degrees, and 8 members who hold master’s degrees. Hundreds of students at various university levels graduate from the CIS Department.
-        </p>
-    </section>
-
-    <section id="aboutCreator-content" class="content-container">
-        <h2>About Site engineer </h2>
-        <p>  Maali Mohammad Assaf Al Salamat studies at the University of Jordan, King Abdullah II Bin Al Hussein College, Department of Computer Information Systems. Despite the difficulties, I believe that what you seek will be achieved.</p>
-    </section>
-
-    <section id="videos-content" class="content-container">
-        <h2>Video Playlist</h2>
-        <div class="video-section">
-            <!-- عند الضغط على صورة الفيديو، ستظهر قائمة الفيديوهات -->
-            <div class="video-container" onclick="toggleVideoList()">
-                <img class="video-thumbnail" src="MMM.jpg" alt="Video 1">
-                <p>Click to view Image Processing course</p>
-            </div>
-            
-
-            <!-- قائمة الفيديوهات (مخفية في البداية) -->
-            <div id="videoList" class="video-list">
-                <div class="video-container" onclick="redirectToVideo('video1')">
-                    <p>Chapter 2 Digital Image Fundamentals</p>
-                </div>
-                <div class="video-container" onclick="redirectToVideo('video2')">
-                    <p>Chapter 2 Image Interpolation
-                    </p>
-                </div>
-                <div class="video-container" onclick="redirectToVideo('video3')">
-                    <p>
-                       
-               
-        
-                        Chapter 2 Pixel's Relationships</p>
-                </div>
-                <div class="video-container" onclick="redirectToVideo('video4')">
-                    <p>
-                        Chapter 2 Regions and Distance Measures
-               </p>
-                </div> <div class="video-container" onclick="redirectToVideo('video5')">
-                    <p>
-                        Chapter 2 MATLAB 
-               
-        </p><hr>
-                </div> <div class="video-container" onclick="redirectToVideo('video6')">
-                    <p>
-        
-                        Chapter 3 Basic Intensity Transformation Function</p>
-                </div>
-                <div class="video-container" onclick="redirectToVideo('video7')">
-                    <p>
-                        Chapter 3 Contrast Stretching and Thresholding
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video8')">
-                    <p>Chapter 3 Histogram Equalization
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video9')">
-                    <p>Chapter 3 Slicing
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video10')">
-                    <p>Chapter 3 Assignment 2
-                    </p><hr>
-                </div><div class="video-container" onclick="redirectToVideo('video11')">
-                    <p>Ch4 Frequency Transform 1
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video12')">
-                    <p>Ch4 Frequency Transform 2
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video13')">
-                    <p>Ch4 Frequency Transform 3
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video14')">
-                    <p>Ch4 Frequency Transform 4
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video15')">
-                    <p>Ch4 Frequency Transform 5
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video16')">
-                    <p>Ch4 Frequency Transform 6
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video17')">
-                    <p>Assignment Freq transform
-                    </p><hr>
-                </div><div class="video-container" onclick="redirectToVideo('video18')">
-                    <p>Ch6 Color 1
-
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video19')">
-                    <p>Ch6 Color 2
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video20')">
-                    <p>ch6 Color 3
-
-                    </p>
-                </div>
-                <div class="video-container" onclick="redirectToVideo('video21')">
-                    <p>Ch6 Color 4
-
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video22')">
-                    <p>Ch6 Color 5
-                    </p><hr>
-                </div><div class="video-container" onclick="redirectToVideo('video23')">
-                    <p>Ch9 Morph 1
-
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video24')">
-                    <p>Ch9 Morph 2
-
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video25')">
-                    <p>Ch9 Morph 3
-                    </p><hr>
-                </div><div class="video-container" onclick="redirectToVideo('video26')">
-                    <p>
-                        Ch11 Image Representation and Description
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video27')">
-                    <p>
-                        Smoothing Filters in Matlab
-                    </p>
-                </div> <div class="video-container" onclick="redirectToVideo('video31')">
-                    <p>Smoothing Filters
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video28')">
-                    <p>Sharpening Filters in Matlab
-                    </p>
-                </div><div class="video-container" onclick="redirectToVideo('video30')">
-                    <p>Sharpening Spatial Filters
-                    </p><div class="video-container" onclick="redirectToVideo('video29')">
-                    <p>Unsharp filter and Sobel Operator
-                    </p>
-                </div>
-                </div>
-                <section id="files-content" class="content-container" style="display: none;">
-                    <h2>Available Files</h2>
-                    <ul>
-                        <li><a href="Image Slides (1).pdf" download></a>Image Slides</li>
-                        <li><a href="uploads/files/sample2.docx" download>Download Sample File 2</a></li>
-                        <li><a href="uploads/files/sample3.pptx" download>Download Sample File 3</a></li>
-                        <li><a href="uploads/files/sample4.txt" download>Download Sample File 4</a></li>
-                    </ul>
-                </section>
-                
-                
-                
-                
-                
-                
-                
-            </div>
-        </div>
-    </section>
-
-    <script>
-        function showContent(content) {
-            const sections = document.querySelectorAll('.content-container');
-            sections.forEach(section => section.style.display = 'none');
-            document.getElementById(content + '-content').style.display = 'block';
-        }
-
-        function toggleVideoList() {
-            const videoList = document.getElementById("videoList");
-            videoList.style.display = (videoList.style.display === "block") ? "none" : "block";
-        }
-
-        function redirectToVideo(videoId) {
-            let videoUrl;
-            if (videoId === 'video1') {
-                videoUrl = 'https://youtu.be/KonmrkrwFME?si=GJNFsMBZivZGyN9v';
-            } else if (videoId === 'video2') {
-                videoUrl = 'https://youtu.be/h07_iP2oOYY?si=lN14jqPT0piUoRQ6';
-            } else if (videoId === 'video3') {
-                videoUrl = 'https://youtu.be/oI7TzSCgVBg?si=JsmK0aBfw38qu7Jw';
-            }else if (videoId === 'video4') {
-                videoUrl = 'https://youtu.be/pxiIS9fUzWw?si=Pj8MuScZK8MaHUej';
-            }else if (videoId === 'video5') {
-                videoUrl = 'https://youtu.be/sqliWB3RPy4?si=7a356fWAcLA0_Qut';
-            }else if (videoId === 'video6') {
-                videoUrl = 'https://youtu.be/yxgh6mT0HWE?si=tfxEh2XcqPBVWuY1';
-            }
-            else if (videoId === 'video7') {
-                videoUrl = 'https://youtu.be/8FZJFT-0L0Y?si=nSxheoIpKHL7thAp';
-            }else if (videoId === 'video8') {
-                videoUrl = 'https://youtu.be/5-7xskk3aeo?si=TRYtgRiX4Ky33s0n';
-            }else if (videoId === 'video9') {
-                videoUrl = 'https://youtu.be/wOw79o4OFc8?si=jO50OixqeO6euOED';
-            }else if (videoId === 'video10') {
-                videoUrl = 'https://youtu.be/gYczYdsTxBs?si=bkbn20HWy2gMdFFd';
-            }else if (videoId === 'video11') {
-                videoUrl = 'https://youtu.be/r6_56BGSooo?si=z9Z8B06Di20sPFcI';
-            }else if (videoId === 'video12') {
-                videoUrl = 'https://youtu.be/wCA_qK8-QGs?si=psvAXrEk72Q4cGSr';
-            }else if (videoId === 'video13') {
-                videoUrl = 'https://youtu.be/ZV155RYdrZ8?si=fYKJ50Wnfs4B5M6e';
-            }else if (videoId === 'video14') {
-                videoUrl = 'https://youtu.be/AF36YFTTquo?si=KBLrXESeqrqZ2Z5J';
-            }else if (videoId === 'video15') {
-                videoUrl = 'https://youtu.be/IqWxjzkApWM?si=N86t1SkmCJGWOjuz';
-            }else if (videoId === 'video16') {
-                videoUrl = 'https://youtu.be/HCf5zcqEB1g?si=8waTBkrf9I2DiLcU';
-            }else if (videoId === 'video17') {
-                videoUrl = 'https://youtu.be/hNwBuXmUEBs?si=bDfStiHr79MprMIU';
-            }else if (videoId === 'video18') {
-                videoUrl = 'https://youtu.be/ENKbqhNT_es?si=VPMwA_pegwghIktS';
-            }else if (videoId === 'video19') {
-                videoUrl = 'https://youtu.be/MaVCgPCpw8o?si=0b4wPrkq4xNeu1Qu';
-            }else if (videoId === 'video20') {
-                videoUrl = 'https://youtu.be/LYgT4FqjaO8?si=nH0Rf3eUQPoKNYEk';
-            }
-            else if (videoId === 'video21') {
-                videoUrl = 'https://youtu.be/XlLqnV3DlCE?si=GGeLL2U_FJmQO18y';
-            }else if (videoId === 'video22') {
-                videoUrl = 'https://youtu.be/aj7pYSHvjHE?si=8gTinXMj1eiwmmqb';
-            }else if (videoId === 'video23') {
-                videoUrl = 'https://youtu.be/Y5Ax4zOfVNo?si=9u6Bm8sGOUwXKLaf';
-            }else if (videoId === 'video24') {
-                videoUrl = 'https://youtu.be/JW71Cpawp7E?si=PTsLWW2K8R3u7vzE';
-            }else if (videoId === 'video25') {
-                videoUrl = 'https://youtu.be/CNLFmth82CQ?si=Jo9gvBGF6qzhH95o';
-            }else if (videoId === 'video26') {
-                videoUrl = 'https://youtu.be/SO5Lk7yw7aY?si=coma4Xzy3LewuPQb';
-            }else if (videoId === 'video27') {
-                videoUrl = 'https://youtu.be/Z7lKFcMB_GQ?si=KX3rf8z1tCUJFiEe';
-            }else if (videoId === 'video28') {
-                videoUrl = 'https://youtu.be/mbZeH9kdq3c?si=ofKaX_SXuPgrWgy7';
-            }else if (videoId === 'video29') {
-                videoUrl = 'https://youtu.be/QMMEKVqvy-4?si=AHwx-k6QpymuoeXK';
-            }else if (videoId === 'video30') {
-                videoUrl = 'https://youtu.be/t1xN7AFjp4o?si=PBvjlf9kVsaSYhFe';
-            }else if (videoId === 'video31') {
-                videoUrl = 'https://youtu.be/MPnIQ8pM2dc?si=CGvU9QLRSUZTKL_Q';
-            }
-            window.open(videoUrl, '_blank');
-        }
-        
-
-    function toggleFiles() {
-        const filesSection = document.getElementById("files-content");
-        filesSection.style.display = (filesSection.style.display === "block") ? "none" : "block";
+      // عرض الصفحة المحددة
+      const targetPage = document.getElementById(page);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+      }
     }
 
+    // إرسال البلاغ
+    function submitReport() {
+      alert("تم إرسال البلاغ!");
+      showPage('homePage');
+    }
 
+    // لالتقاط صورة من الكاميرا أو من جهاز المستخدم
+    function openImageSelector() {
+      document.getElementById('imageInput').click();
+    }
 
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('imagePreview').src = e.target.result;
+          document.getElementById('imagePreview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
 
-    </script>
+    // تغيير لغة الصفحة
+    function changeLanguage(language) {
+      const texts = {
+        'العربية': {
+          title: 'كن مُرمّم - البلاغات الإلكترونية',
+          loginTitle: 'تسجيل الدخول',
+          username: 'اسم المستخدم',
+          password: 'كلمة المرور',
+          submit: 'دخول',
+          newReport: 'الإبلاغ عن مشكلة جديدة',
+          lastReports: 'آخر البلاغات:',
+          reportTitle: 'الإبلاغ عن مشكلة',
+          categoryLabel: 'تصنيف المشكلة:',
+          descriptionLabel: 'وصف المشكلة:',
+          addImage: 'إضافة صورة',
+          sendReport: 'إرسال البلاغ',
+          notifications: 'الإشعارات',
+          close: 'إغلاق',
+          categories: ['طرق', 'إنارة', 'نظافة']
+        },
+        'الإنجليزية': {
+          title: 'Kun Murammim - Electronic Reports',
+          loginTitle: 'Login',
+          username: 'Username',
+          password: 'Password',
+          submit: 'Login',
+          newReport: 'Report New Issue',
+          lastReports: 'Latest Reports:',
+          reportTitle: 'Report Issue',
+          categoryLabel: 'Issue Category:',
+          descriptionLabel: 'Issue Description:',
+          addImage: 'Add Image',
+          sendReport: 'Submit Report',
+          notifications: 'Notifications',
+          close: 'Close',
+          categories: ['Roads', 'Lighting', 'Cleaning']
+        },
+        'الفرنسية': {
+          title: 'Kun Murammim - Rapports Électroniques',
+          loginTitle: 'Se Connecter',
+          username: 'Nom d\'utilisateur',
+          password: 'Mot de passe',
+          submit: 'Se connecter',
+          newReport: 'Signaler un Nouveau Problème',
+          lastReports: 'Derniers Rapports:',
+          reportTitle: 'Signaler un Problème',
+          categoryLabel: 'Catégorie du Problème:',
+          descriptionLabel: 'Description du Problème:',
+          addImage: 'Ajouter une Image',
+          sendReport: 'Soumettre le Rapport',
+          notifications: 'Notifications',
+          close: 'Fermer',
+          categories: ['Routes', 'Éclairage', 'Nettoyage']
+        },
+        'الإسبانية': {
+          title: 'Kun Murammim - Informes Electrónicos',
+          loginTitle: 'Iniciar Sesión',
+          username: 'Nombre de usuario',
+          password: 'Contraseña',
+          submit: 'Iniciar Sesión',
+          newReport: 'Reportar Nuevo Problema',
+          lastReports: 'Últimos Informes:',
+          reportTitle: 'Reportar Problema',
+          categoryLabel: 'Categoría del Problema:',
+          descriptionLabel: 'Descripción del Problema:',
+          addImage: 'Agregar Imagen',
+          sendReport: 'Enviar Informe',
+          notifications: 'Notificaciones',
+          close: 'Cerrar',
+          categories: ['Carreteras', 'Iluminación', 'Limpieza']
+        },
+        'الكورية': {
+          title: 'Kun Murammim - 전자 보고서',
+          loginTitle: '로그인',
+          username: '사용자 이름',
+          password: '비밀번호',
+          submit: '로그인',
+          newReport: '새 문제 보고',
+          lastReports: '최근 보고:',
+          reportTitle: '문제 보고',
+          categoryLabel: '문제 카테고리:',
+          descriptionLabel: '문제 설명:',
+          addImage: '이미지 추가',
+          sendReport: '보고서 제출',
+          notifications: '알림',
+          close: '닫기',
+          categories: ['도로', '조명', '청소']
+        },
+        'الصينية': {
+          title: 'Kun Murammim - 电子报告',
+          loginTitle: '登录',
+          username: '用户名',
+          password: '密码',
+          submit: '登录',
+          newReport: '报告新问题',
+          lastReports: '最新报告:',
+          reportTitle: '报告问题',
+          categoryLabel: '问题分类:',
+          descriptionLabel: '问题描述:',
+          addImage: '添加图片',
+          sendReport: '提交报告',
+          notifications: '通知',
+          close: '关闭',
+          categories: ['道路', '照明', '清洁']
+        }
+      };
+
+      // تغيير عنوان الصفحة
+      document.title = texts[language].title;
+
+      // تغيير النصوص في الصفحة حسب اللغة
+      document.getElementById('loginTitle').innerText = texts[language].loginTitle;
+      document.getElementById('usernameLabel').innerText = texts[language].username;
+      document.getElementById('passwordLabel').innerText = texts[language].password;
+      document.getElementById('submitBtn').innerText = texts[language].submit;
+      document.getElementById('newReportBtn').innerText = texts[language].newReport;
+      document.getElementById('lastReportsTitle').innerText = texts[language].lastReports;
+      document.getElementById('reportTitle').innerText = texts[language].reportTitle;
+      document.getElementById('categoryLabel').innerText = texts[language].categoryLabel;
+      document.getElementById('descriptionLabel').innerText = texts[language].descriptionLabel;
+      document.getElementById('addImageBtn').innerText = texts[language].addImage;
+      document.getElementById('sendReportBtn').innerText = texts[language].sendReport;
+      document.getElementById('notificationsTitle').innerText = texts[language].notifications;
+      document.getElementById('closeBtn').innerText = texts[language].close;
+
+      // تغيير خيارات التصنيف
+      const categorySelect = document.getElementById('categorySelect');
+      categorySelect.innerHTML = ''; // مسح الخيارات الحالية
+      texts[language].categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.innerText = category;
+        categorySelect.appendChild(option);
+      });
+    }
+
+    // إغلاق نافذة الإشعارات
+    function closeNotifications() {
+      document.getElementById('notificationsPage').classList.add('hidden');
+    }
+
+    // تأكيد عملية تسجيل الدخول
+    function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // منطق تحقق بسيط (مثلًا التحقق من صحة المدخلات)
+      if (username === "" || password === "") {
+        document.getElementById('loginAlert').style.display = 'block'; // إظهار التنبيه الأحمر
+      } else {
+        document.getElementById('loginAlert').style.display = 'none';
+        showPage('homePage');
+      }
+    }
+
+    // عند تحميل الصفحة، افتح صفحة تسجيل الدخول بشكل افتراضي
+    window.onload = function() {
+      showPage('loginPage');
+    };
+  </script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- رأس الصفحة مع اسم المشروع -->
+  <header class="bg-primary text-light py-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-bold">كن مُرمّم</h1>
+      <div class="flex items-center">
+        <!-- القائمة المنسدلة للغات -->
+        <div class="dropdown relative">
+          <button class="text-white mr-4">اللغات</button>
+          <div class="dropdown-content">
+            <a href="#" onclick="changeLanguage('العربية')">العربية</a>
+            <a href="#" onclick="changeLanguage('الإنجليزية')">الإنجليزية</a>
+            <a href="#" onclick="changeLanguage('الفرنسية')">الفرنسية</a>
+            <a href="#" onclick="changeLanguage('الإسبانية')">الإسبانية</a>
+            <a href="#" onclick="changeLanguage('الكورية')">الكورية</a>
+            <a href="#" onclick="changeLanguage('الصينية')">الصينية</a>
+          </div>
+        </div>
+        <!-- أيقونة الملف الشخصي -->
+        <button onclick="showPage('loginPage')" class="profile-icon">
+          <i class="fas fa-user"></i>
+        </button>
+        <!-- أيقونة الإشعارات -->
+        <button onclick="showPage('notificationsPage')" class="p-3 bg-secondary text-white rounded-full">
+          <i class="fas fa-bell"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- صفحة تسجيل الدخول -->
+  <div id="loginPage" class="page hidden flex items-center justify-center h-screen bg-gray-200">
+    <div class="card w-96">
+      <h2 id="loginTitle" class="text-2xl font-semibold mb-4 text-center">تسجيل الدخول</h2>
+      
+      <!-- التنبيه الأحمر في حال كانت المدخلات غير صحيحة -->
+      <div id="loginAlert" class="alert">يرجى إدخال جميع البيانات!</div>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="mb-4">
+          <label id="usernameLabel" for="username" class="block text-sm font-medium text-gray-700">اسم المستخدم</label>
+          <input type="text" id="username" name="username" class="w-full p-3 border rounded-lg shadow-md focus:outline-none" required />
+        </div>
+        <div class="mb-4">
+          <label id="passwordLabel" for="password" class="block text-sm font-medium text-gray-700">كلمة المرور</label>
+          <input type="password" id="password" name="password" class="w-full p-3 border rounded-lg shadow-md focus:outline-none" required />
+        </div>
+        <button id="submitBtn" type="submit" class="w-full bg-primary text-light p-3 rounded-lg hover:opacity-75">دخول</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- الصفحة الرئيسية بعد تسجيل الدخول -->
+  <div id="homePage" class="page hidden p-4">
+    <div class="card p-4 mb-6">
+      <img src="images (1).jpeg" alt="إعلان" class="rounded-lg mb-4">
+      <button id="newReportBtn" onclick="showPage('reportPage')" class="w-full bg-primary text-light p-3 rounded-lg hover:opacity-75">الإبلاغ عن مشكلة جديدة</button>
+    </div>
+
+    <div class="card p-4">
+      <h2 id="lastReportsTitle" class="text-xl font-semibold mb-4">آخر البلاغات:</h2>
+      <ul>
+        <li class="bg-gray-100 p-3 rounded-lg text-dark flex items-center">
+          <i class="fas fa-lightbulb text-blue-500 mr-2"></i> انقطاع الإنارة في المنطقة 3 - تم الإصلاح - 2024/10/23
+        </li>
+        <li class="bg-gray-100 p-3 rounded-lg text-dark flex items-center">
+          <i class="fas fa-trash-alt text-green-500 mr-2"></i> تراكم النفايات (نظافة) - تم معالجته - 2024/10/22
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- صفحة الإبلاغ عن مشكلة -->
+  <div id="reportPage" class="page hidden p-4">
+    <div class="card p-4">
+      <h2 id="reportTitle" class="text-xl font-semibold mb-4">الإبلاغ عن مشكلة</h2>
+      <div class="mb-4">
+        <label id="categoryLabel" for="categorySelect" class="block text-sm font-medium text-gray-700">تصنيف المشكلة:</label>
+        <select id="categorySelect" name="category" class="w-full p-3 border rounded-lg shadow-md focus:outline-none" required>
+          <!-- سيتم ملؤها بالخيارات عند تغيير اللغة -->
+        </select>
+      </div>
+      <div class="mb-4">
+        <label id="descriptionLabel" for="description" class="block text-sm font-medium text-gray-700">وصف المشكلة:</label>
+        <textarea id="description" name="description" class="w-full p-3 border rounded-lg shadow-md focus:outline-none" rows="4" required></textarea>
+      </div>
+      <div class="mb-4">
+        <button type="button" id="addImageBtn" onclick="openImageSelector()" class="w-full bg-secondary text-light p-3 rounded-lg hover:opacity-75">إضافة صورة</button>
+        <input type="file" id="imageInput" class="hidden" accept="image/*" onchange="handleImageUpload(event)">
+        <img id="imagePreview" src="" alt="Image Preview" class="hidden w-full mt-4 rounded-lg">
+      </div>
+      <button id="sendReportBtn" onclick="submitReport()" class="w-full bg-primary text-light p-3 rounded-lg hover:opacity-75">إرسال البلاغ</button>
+    </div>
+  </div>
+
+  <!-- صفحة الإشعارات -->
+  <div id="notificationsPage" class="page hidden fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-75 p-4">
+    <div class="card bg-white p-4 relative">
+      <h2 id="notificationsTitle" class="text-xl font-semibold mb-4">الإشعارات</h2>
+      <ul>
+        <li class="text-gray-700">تم معالجة بلاغك عن مشكلة الطرق.</li>
+        <li class="text-gray-700">بلاغك عن الإنارة في المنطقة 2 قيد المتابعة.</li>
+      </ul>
+      <button id="closeBtn" onclick="closeNotifications()" class="absolute top-2 right-2 text-gray-500">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
 </body>
 </html>
